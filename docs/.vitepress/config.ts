@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  base: '/ngxsmk-migrate/',
   title: "ngxsmk-migrate",
   description: "AI-Powered Angular Modernization Toolkit",
   themeConfig: {
