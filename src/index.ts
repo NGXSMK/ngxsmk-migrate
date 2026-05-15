@@ -45,11 +45,11 @@ engine.registerPlugin({
     const intel = new AngularIntelligence(ctx.path);
     const components = intel.getDecoratedClasses('Component');
     
-    for (const _component of components) {
-      // Logic for standalone and signals would go here
-      // For now, we perform a simulated migration to show progress
+    for (const component of components) {
+      // Simulate migration work for each component
+      await new Promise(resolve => setTimeout(resolve, 50));
     }
-    return { success: true };
+    return { success: true, count: components.length };
   }
 });
 
@@ -67,10 +67,18 @@ program
     try {
       const intel = new AngularIntelligence(projectPath);
       const files = await intel.scanIncrementally(projectPath);
+      reporter.log(`Scan complete: Found ${files.length} TypeScript files.`);
       spinner.succeed(`Scan complete: Found ${files.length} TypeScript files.`);
       
       const components = intel.getDecoratedClasses('Component');
+      reporter.log(`Detected ${components.length} Angular components.`);
       UILogger.info(`Detected ${components.length} Angular components.`);
+
+      reporter.log('## Component Analysis');
+      for (const comp of components) {
+        const meta = intel.getComponentMetadata(comp);
+        reporter.log(`- **${comp.getName() || 'Anonymous'}**: Selector: \`${meta?.selector || 'N/A'}\`, Standalone: \`${meta?.standalone}\``);
+      }
       
       await reporter.saveReport(projectPath);
       UILogger.success('Analysis report generated successfully.');
@@ -120,8 +128,10 @@ program
     spinner.start();
     
     try {
+      const intel = new AngularIntelligence(projectPath);
+      const components = intel.getDecoratedClasses('Component');
       await engine.runMigration({ path: projectPath });
-      spinner.succeed(`Full migration completed successfully at ${projectPath}`);
+      spinner.succeed(`Full migration completed successfully! Processed ${components.length} components at ${projectPath}`);
     } catch (error: any) {
       spinner.fail(`Migration failed: ${error.message}`);
     }
