@@ -1,47 +1,28 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { AIProvider } from './ai-provider.interface.js';
 import { PromptBuilder, PromptContext } from './prompt-builder.js';
-import { SecretMasker } from '../security/ai/masking.js';
 
 export class AIOrchestrator {
-  private readonly genAI: GoogleGenerativeAI;
-  private readonly apiKey: string;
-  private readonly defaultModel: string;
-
-  constructor(apiKey: string, modelName: string = process.env.GEMINI_MODEL || 'gemini-1.5-flash') {
-    this.apiKey = apiKey;
-    this.defaultModel = modelName;
-    this.genAI = new GoogleGenerativeAI(apiKey);
-  }
+  constructor(private provider: AIProvider) {}
 
   /**
    * Performs a context-aware migration ask.
    */
-  async migrate(context: PromptContext, modelName: string = this.defaultModel) {
+  async migrate(context: PromptContext, modelName?: string) {
     const rawPrompt = PromptBuilder.buildMigrationPrompt(context);
-
-    // Safety: Mask the prompt before any logging or potential exposure
-    const safePrompt = SecretMasker.mask(rawPrompt, [this.apiKey]);
-
-    const model = this.genAI.getGenerativeModel({ model: modelName });
-    const result = await model.generateContent(safePrompt);
-    return result.response.text();
+    return this.provider.ask(rawPrompt, modelName);
   }
 
   /**
    * Simple explain ask.
    */
-  async explain(topic: string, modelName: string = this.defaultModel) {
-    const model = this.genAI.getGenerativeModel({ model: modelName });
-    const result = await model.generateContent(`Explain this Angular concept: ${topic}`);
-    return result.response.text();
+  async explain(topic: string, modelName?: string) {
+    return this.provider.explain(topic, modelName);
   }
 
   /**
    * General purpose AI ask.
    */
-  async ask(prompt: string, modelName: string = this.defaultModel) {
-    const model = this.genAI.getGenerativeModel({ model: modelName });
-    const result = await model.generateContent(prompt);
-    return result.response.text();
+  async ask(prompt: string, modelName?: string) {
+    return this.provider.ask(prompt, modelName);
   }
 }

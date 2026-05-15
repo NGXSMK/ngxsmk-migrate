@@ -41,30 +41,33 @@ npm install -g ngxsmk-migrate
 
 ### Configuration
 
-To enable AI-powered refactoring and explanations, set your Google Gemini API key:
+To enable AI-powered refactoring and explanations, set the API key for your preferred provider:
+
+#### **Gemini (Default)**
+*   **Env Variable**: `GOOGLE_API_KEY`
+*   **CLI**: `ngxsmk-migrate --provider gemini` (default)
+
+#### **ChatGPT (OpenAI)**
+*   **Env Variable**: `OPENAI_API_KEY`
+*   **CLI**: `ngxsmk-migrate --provider openai --model gpt-4o`
+
+#### **Claude (Anthropic)**
+*   **Env Variable**: `ANTHROPIC_API_KEY`
+*   **CLI**: `ngxsmk-migrate --provider anthropic --model claude-3-5-sonnet-20240620`
 
 **Windows (PowerShell):**
 ```powershell
-$env:GOOGLE_API_KEY="your_api_key_here"
+$env:OPENAI_API_KEY="your_api_key_here"
 ```
 
 **macOS / Linux:**
 ```bash
-export GOOGLE_API_KEY="your_api_key_here"
+export OPENAI_API_KEY="your_api_key_here"
 ```
 
 #### **Advanced: Switching Models**
 
-By default, the toolkit uses `gemini-1.5-flash`. You can switch to other models (like `gemini-1.5-pro`) using:
-
-1.  **Environment Variable**:
-    ```bash
-    export GEMINI_MODEL="gemini-1.5-pro"
-    ```
-2.  **CLI Option**:
-    ```bash
-    ngxsmk-migrate explain "Signals" --model gemini-1.5-pro
-    ```
+By default, the toolkit uses the most optimal model for each provider. You can override it using the `-m` or `--model` flag.
 
 ### Usage
 

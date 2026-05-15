@@ -4,6 +4,9 @@ import chalk from 'chalk';
 import { AngularIntelligence } from './intelligence/angular-intel.js';
 import { AIOrchestrator } from './orchestrator/ai-orchestrator.js';
 import { MigrationEngine } from './engine/migration-engine.js';
+import { GeminiProvider } from './orchestrator/providers/gemini-provider.js';
+import { OpenAIProvider } from './orchestrator/providers/openai-provider.js';
+import { AnthropicProvider } from './orchestrator/providers/anthropic-provider.js';
 import { ReportGenerator } from './io/report-generator.js';
 import { UISpinner } from './ux/cli/spinner.js';
 import { UILogger } from './ux/cli/logger.js';
@@ -27,13 +30,32 @@ program
   .version('1.0.0')
   .option('-d, --dry-run', 'perform a dry run without modifying files')
   .option('--no-backup', 'skip creating backups before migration')
-  .option('-m, --model <name>', 'Gemini model to use', process.env.GEMINI_MODEL || 'gemini-1.5-flash');
+  .option('-p, --provider <name>', 'AI provider to use (gemini, openai, anthropic)', 'gemini')
+  .option('-m, --model <name>', 'AI model to use (default depends on provider)', process.env.GEMINI_MODEL || '');
 
 // Initialize Architectural Layers
-const apiKey = process.env.GOOGLE_API_KEY || '';
 const engine = new MigrationEngine();
 
-const getAI = () => new AIOrchestrator(apiKey, program.opts().model);
+const getAI = () => {
+  const provider = program.opts().provider?.toLowerCase();
+  const model = program.opts().model;
+
+  if (provider === 'openai') {
+    const key = process.env.OPENAI_API_KEY || '';
+    if (!key) UILogger.warning('OPENAI_API_KEY not found.');
+    return new AIOrchestrator(new OpenAIProvider(key, model || 'gpt-4o'));
+  }
+  
+  if (provider === 'anthropic') {
+    const key = process.env.ANTHROPIC_API_KEY || '';
+    if (!key) UILogger.warning('ANTHROPIC_API_KEY not found.');
+    return new AIOrchestrator(new AnthropicProvider(key, model || 'claude-3-5-sonnet-20240620'));
+  }
+
+  const key = process.env.GOOGLE_API_KEY || '';
+  if (!key) UILogger.warning('GOOGLE_API_KEY not found.');
+  return new AIOrchestrator(new GeminiProvider(key, model || 'gemini-1.5-flash'));
+};
 
 // Register Core Plugins
 engine.registerPlugin({
