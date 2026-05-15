@@ -1,6 +1,6 @@
 {
   "name": "ngxsmk-migrate",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "AI powered Angular migration toolkit for standalone components, signals, and modern Angular upgrades.",
   "type": "module",
   "bin": {
