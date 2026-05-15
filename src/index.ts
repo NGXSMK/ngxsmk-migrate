@@ -220,8 +220,12 @@ program
       }
     ]);
 
-    const envVar = answers.provider === 'Gemini' ? 'GOOGLE_API_KEY' : 
-                   answers.provider === 'OpenAI' ? 'OPENAI_API_KEY' : 'ANTHROPIC_API_KEY';
+    const providerEnvMap: Record<string, string> = {
+      Gemini: 'GOOGLE_API_KEY',
+      OpenAI: 'OPENAI_API_KEY',
+      Anthropic: 'ANTHROPIC_API_KEY',
+    };
+    const envVar = providerEnvMap[answers.provider];
     
     const envContent = `\n# ngxsmk-migrate configuration
 ${envVar}=${answers.apiKey}
