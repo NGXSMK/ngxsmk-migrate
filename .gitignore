@@ -37,3 +37,8 @@ coverage/
 # Misc
 ngxsmk-report.md
 ngxsmk-backup-*/
+
+# VitePress
+docs/.vitepress/dist
+docs/.vitepress/cache
+

@@ -15,7 +15,8 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           { text: 'What is ngxsmk-migrate?', link: '/guide/what-is-ngxsmk' },
-          { text: 'Getting Started', link: '/guide/getting-started' }
+          { text: 'Getting Started', link: '/guide/getting-started' },
+          { text: 'Platform Architecture', link: '/guide/architecture' }
         ]
       },
       {
