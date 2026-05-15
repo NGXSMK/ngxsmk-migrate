@@ -7,7 +7,6 @@ export class ReportGenerator {
 
   log(message: string) {
     this.logs.push(message);
-    console.log(message);
   }
 
   async saveReport(projectPath: string) {
