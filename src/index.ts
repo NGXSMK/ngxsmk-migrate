@@ -26,12 +26,14 @@ program
   .description('AI powered Angular migration and modernization toolkit')
   .version('1.0.0')
   .option('-d, --dry-run', 'perform a dry run without modifying files')
-  .option('--no-backup', 'skip creating backups before migration');
+  .option('--no-backup', 'skip creating backups before migration')
+  .option('-m, --model <name>', 'Gemini model to use', process.env.GEMINI_MODEL || 'gemini-1.5-flash');
 
 // Initialize Architectural Layers
 const apiKey = process.env.GOOGLE_API_KEY || '';
-const ai = new AIOrchestrator(apiKey);
 const engine = new MigrationEngine();
+
+const getAI = () => new AIOrchestrator(apiKey, program.opts().model);
 
 // Register Core Plugins
 engine.registerPlugin({
@@ -155,6 +157,7 @@ program
     const spinner = new UISpinner(`Asking AI about: ${topic}`);
     spinner.start();
     
+    const ai = getAI();
     const explanation = await ai.explain(topic);
     spinner.succeed('AI response received:');
     console.log(chalk.gray('--------------------------------------------------'));

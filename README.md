@@ -39,6 +39,33 @@ Upgrading large Angular enterprise applications is often slow, manual, and error
 npm install -g ngxsmk-migrate
 ```
 
+### Configuration
+
+To enable AI-powered refactoring and explanations, set your Google Gemini API key:
+
+**Windows (PowerShell):**
+```powershell
+$env:GOOGLE_API_KEY="your_api_key_here"
+```
+
+**macOS / Linux:**
+```bash
+export GOOGLE_API_KEY="your_api_key_here"
+```
+
+#### **Advanced: Switching Models**
+
+By default, the toolkit uses `gemini-1.5-flash`. You can switch to other models (like `gemini-1.5-pro`) using:
+
+1.  **Environment Variable**:
+    ```bash
+    export GEMINI_MODEL="gemini-1.5-pro"
+    ```
+2.  **CLI Option**:
+    ```bash
+    ngxsmk-migrate explain "Signals" --model gemini-1.5-pro
+    ```
+
 ### Usage
 
 1. **Analyze your project**:
