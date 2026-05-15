@@ -1,0 +1,27 @@
+{
+  "name": "ngxsmk-migrate-vscode",
+  "displayName": "ngxsmk-migrate",
+  "description": "AI assisted Angular migration and modernization assistant",
+  "version": "1.0.0",
+  "publisher": "ngxsmk",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ngxsmk-migrate.analyze",
+        "title": "ngxsmk: Analyze Angular Project"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.0.0"
+  }
+}
