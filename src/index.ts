@@ -205,8 +205,8 @@ program
       {
         type: 'input',
         name: 'model',
-        message: (ans) => `Which model would you like to use for ${ans.provider}? (Leave empty for default)`,
-        default: (ans) => {
+        message: (ans: any) => `Which model would you like to use for ${ans.provider}? (Leave empty for default)`,
+        default: (ans: any) => {
           if (ans.provider === 'Gemini') return 'gemini-1.5-flash';
           if (ans.provider === 'OpenAI') return 'gpt-4o';
           return 'claude-3-5-sonnet-20240620';
@@ -215,7 +215,7 @@ program
       {
         type: 'password',
         name: 'apiKey',
-        message: (ans) => `Enter your ${ans.provider} API Key:`,
+        message: (ans: any) => `Enter your ${ans.provider} API Key:`,
         mask: '*'
       }
     ]);
