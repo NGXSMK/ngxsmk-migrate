@@ -8,6 +8,20 @@ Install `ngxsmk-migrate` globally to use the CLI:
 npm install -g ngxsmk-migrate
 ```
 
+## Configuration
+
+To enable AI-powered refactoring and explanations, set your Google Gemini API key:
+
+**Windows (PowerShell):**
+```powershell
+$env:GOOGLE_API_KEY="your_api_key_here"
+```
+
+**macOS / Linux:**
+```bash
+export GOOGLE_API_KEY="your_api_key_here"
+```
+
 ## Quick Start
 
 1. **Analyze your project**:
