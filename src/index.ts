@@ -75,7 +75,7 @@ engine.registerPlugin({
     const intel = new AngularIntelligence(ctx.path);
     const components = intel.getDecoratedClasses('Component');
 
-    for (const component of components) {
+    for (const _component of components) {
       // Simulate migration work for each component
       await new Promise(resolve => setTimeout(resolve, 50));
     }
