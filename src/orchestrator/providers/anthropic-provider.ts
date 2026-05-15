@@ -3,8 +3,8 @@ import { AIProvider } from '../ai-provider.interface.js';
 
 export class AnthropicProvider implements AIProvider {
   name = 'Anthropic';
-  private client: Anthropic;
-  private defaultModel: string;
+  private readonly client: Anthropic;
+  private readonly defaultModel: string;
 
   constructor(apiKey: string, model: string = 'claude-3-5-sonnet-20240620') {
     this.client = new Anthropic({ apiKey });

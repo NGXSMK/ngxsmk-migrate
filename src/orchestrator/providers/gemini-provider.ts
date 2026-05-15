@@ -1,10 +1,10 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { AIProvider } from './ai-provider.interface.js';
+import { AIProvider } from '../ai-provider.interface.js';
 
 export class GeminiProvider implements AIProvider {
   name = 'Gemini';
-  private genAI: GoogleGenerativeAI;
-  private defaultModel: string;
+  private readonly genAI: GoogleGenerativeAI;
+  private readonly defaultModel: string;
 
   constructor(apiKey: string, model: string = 'gemini-1.5-flash') {
     this.genAI = new GoogleGenerativeAI(apiKey);

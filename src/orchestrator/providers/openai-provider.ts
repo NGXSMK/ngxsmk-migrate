@@ -3,8 +3,8 @@ import { AIProvider } from '../ai-provider.interface.js';
 
 export class OpenAIProvider implements AIProvider {
   name = 'OpenAI';
-  private client: OpenAI;
-  private defaultModel: string;
+  private readonly client: OpenAI;
+  private readonly defaultModel: string;
 
   constructor(apiKey: string, model: string = 'gpt-4o') {
     this.client = new OpenAI({ apiKey });

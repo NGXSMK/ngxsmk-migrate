@@ -2,7 +2,7 @@ import { AIProvider } from './ai-provider.interface.js';
 import { PromptBuilder, PromptContext } from './prompt-builder.js';
 
 export class AIOrchestrator {
-  constructor(private provider: AIProvider) {}
+  constructor(private readonly provider: AIProvider) { }
 
   /**
    * Performs a context-aware migration ask.
